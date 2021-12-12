@@ -1,6 +1,7 @@
 <launch>
+  <arg name="port" default="/dev/ydlidar"/>
   <node name="ydlidar_node"  pkg="ydlidar_ros"  type="ydlidar_node" output="screen" respawn="false" >
-    <param name="port"         type="string" value="/dev/ydlidar"/>  
+    <param name="port"         type="string" value="$(arg port)"/>  
     <param name="baudrate"         type="int" value="128000"/>  
     <param name="frame_id"     type="string" value="laser_frame"/>
     <param name="resolution_fixed"    type="bool"   value="true"/>
