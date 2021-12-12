@@ -1,19 +1,13 @@
 <launch>
   <arg name="port" default="/dev/ydlidar"/>
   <arg name="lidar" default="lidar"/> <!-- Specify your LIDAR type here-->
-  <arg name="show_model" default="true"/>
+  <arg name="show_model" default="false"/>
 
   <include file="$(find ydlidar_ros)/launch/$(arg lidar).launch" >
     <arg name="port" value="$(arg port)"/>
   </include>
 
-  <group if="$(arg show_model)">
-    <node pkg="tf" type="static_transform_publisher" name="laser_frame_to_base_laser"
-      args="0 0 0 0 0 0 /laser_frame /base_laser 40" />
-    <include file="$(find ydlidar_ros)/launch/display_lidar_model.launch" />
-  </group>
-  <group unless="$(arg show_model)">
-    <!-- Run RVIz without LIDAR model -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ydlidar_ros)/launch/lidar.rviz" />
-  </group>
+  <include file="$(find ydlidar_ros)/launch/view.launch" >
+    <arg name="show_model" value="$(arg show_model)"/>
+  </include>
 </launch>
