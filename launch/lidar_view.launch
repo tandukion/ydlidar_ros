@@ -1,4 +1,9 @@
 <launch>
-  <include file="$(find ydlidar_ros)/launch/lidar.launch" />
+  <arg name="port" default="/dev/ydlidar"/>
+  <arg name="lidar" default="lidar"/> <!-- Specify your LIDAR type here-->
+
+  <include file="$(find ydlidar_ros)/launch/$(arg lidar).launch" >
+    <arg name="port" value="$(arg port)"/>
+  </include>
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ydlidar_ros)/launch/lidar.rviz" />
 </launch>
